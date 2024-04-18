@@ -25,7 +25,8 @@ jobs:
         username=${{github.actor }}
         echo ${{ github.actor }}
         profile_name=${username%-code}
-        echo "::set-output name=profile_name::$profile_name"
+        echo "profile_name=$profile_name" >> "$GITHUB_OUTPUT"
+
       # Get VM instance name
     - name: 'Get the VM instance name'
       run: |
