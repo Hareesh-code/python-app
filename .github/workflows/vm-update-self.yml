@@ -14,6 +14,7 @@ on:
 jobs:
   vm-github-mapper:
     runs-on: ubuntu-latest
+
     steps:
     - uses: actions/checkout@v4
     # Get the git username
@@ -23,14 +24,16 @@ jobs:
         echo ${{ github.actor }}
         profile_name=${username%-code}
         echo $profile_name
-    # Get VM instance name
+      env:
+        VM_USER: ${username%-code}
+      # Get VM instance name
     - name: 'Get the VM instance name'
       run: |
         vm_instance="labvm-alephone labvm-alephzero labvm-banothh labvm-felixte labvm-hitzp labvm-ponnampal"
         for user in $vm_instance; do
           substring=${user#*-}
           echo $substring
-            if [[ $substring == "banothh" ]]; then
+            if [[ $substring == ${{env.VM_USER }} ]]; then
              echo "It's there!"
             else
             echo " User not available"
