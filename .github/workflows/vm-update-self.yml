@@ -26,7 +26,7 @@ jobs:
     # Get VM instance name
     - name: 'Get the VM instance name'
       run: |
-        vm_instance=$profile_name
+        vm_instance=labvm-alephone labvm-alephzero labvm-banothh labvm-felixte labvm-hitzp labvm-ponnampal
         for user in $vm_instance; do
           substring=${user#*-}
           echo $substring
