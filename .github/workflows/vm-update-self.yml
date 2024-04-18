@@ -30,4 +30,9 @@ jobs:
         for user in $vm_instance; do
           substring=${user#*-}
           echo $substring
+            if [[ $substring == $profile_name ]]; then
+             echo "It's there!"
+            else
+            echo " User not available"
+           fi
         done
