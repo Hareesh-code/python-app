@@ -14,7 +14,7 @@ on:
 jobs:
   vm-github-mapper:
     runs-on: ubuntu-latest
-  steps:
+    steps:
     - uses: actions/checkout@v4
     # Get the git username
     - name: 'Get the Github username'
