@@ -20,20 +20,22 @@ jobs:
     - uses: actions/checkout@v4
     # Get the git username
     - name: 'Get the Github username'
+      id: get_username
       run: |
         username=${{github.actor }}
         echo ${{ github.actor }}
         profile_name=${username%-code}
-
+        echo "::set-output name=profile_name::$profile_name"
       # Get VM instance name
     - name: 'Get the VM instance name'
       run: |
-        echo "data : $profile_name"
+        profile_name=${{ steps.get_username.outputs.profile_name }}
         vm_instance="labvm-alephone labvm-alephzero labvm-banothh labvm-felixte labvm-hitzp labvm-ponnampal"
         for user in $vm_instance; do
           substring=${user#*-}
           echo $substring
-            if [[ $substring == "banothh" ]]; then
+          echo $profile_name
+            if [[ $substring == $profile_name ]]; then
              echo "It's there!"
             else
             echo " User not available"
