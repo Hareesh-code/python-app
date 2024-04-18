@@ -21,5 +21,13 @@ jobs:
       run: |
         username=${{github.actor }}
         echo ${{ github.actor }}
-        profile_name=${username%-*}
+        profile_name=${username%-code}
         echo $profile_name
+    # Get VM instance name
+    - name: 'Get the VM instance name'
+      run: |
+        vm_instance=$profile_name
+        for user in $vm_instance; do
+          substring=${user#*-}
+          echo $substring
+        done
