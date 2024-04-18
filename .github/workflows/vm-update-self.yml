@@ -11,6 +11,9 @@ on:
           - default
           - standard-CPU
           - standard-GPU
+  env:
+    VM_USER:
+
 jobs:
   vm-github-mapper:
     runs-on: ubuntu-latest
@@ -24,8 +27,8 @@ jobs:
         echo ${{ github.actor }}
         profile_name=${username%-code}
         echo $profile_name
-      env:
-        VM_USER: ${username%-code}
+        $VM_USER : $profile_name
+        echo "test" :$VM_USER
       # Get VM instance name
     - name: 'Get the VM instance name'
       run: |
