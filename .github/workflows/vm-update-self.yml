@@ -21,4 +21,5 @@ jobs:
       run: |
         username=${{github.actor }}
         echo ${{ github.actor }}
-        profile_name="${username%-code}"
+        profile_name=${{username%-code}}
+        echo $profile_name
