@@ -33,7 +33,7 @@ jobs:
         for user in $vm_instance; do
           substring=${user#*-}
           echo $substring
-            if [[ $substring == ${{env.VM_USER }} ]]; then
+            if [[ $substring == ${VM_USER} ]]; then
              echo "It's there!"
             else
             echo " User not available"
