@@ -11,8 +11,6 @@ on:
           - default
           - standard-CPU
           - standard-GPU
-  env:
-    VM_USER:
 
 jobs:
   vm-github-mapper:
@@ -26,9 +24,10 @@ jobs:
         username=${{github.actor }}
         echo ${{ github.actor }}
         profile_name=${username%-code}
+      with:
+        vm_data=$profile_name
         echo $profile_name
-        $VM_USER : $profile_name
-        echo "test" :$VM_USER
+
       # Get VM instance name
     - name: 'Get the VM instance name'
       run: |
@@ -36,7 +35,7 @@ jobs:
         for user in $vm_instance; do
           substring=${user#*-}
           echo $substring
-            if [[ $substring == ${VM_USER} ]]; then
+            if [[ $substring == vm_data ]]; then
              echo "It's there!"
             else
             echo " User not available"
