@@ -37,14 +37,11 @@ jobs:
           echo $substring
           echo $profile_name
           found=false
-            if [[ $substring == "banothh" ]]; then
+            if [[ $substring == $profile_name]]; then
              echo "It's there!"
              found=true
             break
+           elif [[ ! $substring == $profile_name]]; 
+            echo " Instance not found "
            fi
-        done <<< $substring
-          if [[ $found ==true ]]; then
-          echo "instance found."
-          else
-          echo " not found"
-          fi
+        done
