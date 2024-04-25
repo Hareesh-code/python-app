@@ -37,7 +37,7 @@ jobs:
           echo $substring
           echo $profile_name
             found=false
-            if [[ $substring == $profile_name ]]; then
+            if [[ $substring == "banothh" ]]; then
              found=true
              echo "It's there!"
             break
@@ -47,3 +47,11 @@ jobs:
           echo "something else"
            fi
         done
+      update_to_standed:
+        if: inputs.machine_type == 'standard-GPU'
+        runs-on: ubuntu-latest
+        steps:
+          - name: Update VM
+            run: |
+              profile_data=${{ steps.get_username.outputs.profile_name }}
+              echo "profile_data"
