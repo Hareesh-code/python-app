@@ -36,11 +36,12 @@ jobs:
           substring=${user#*-}
           echo $substring
           echo $profile_name
-             found=false
-            if [[ $substring == $profile_name]]; then
+            found=false
+            if [[ $substring == $profile_name ]]; then
+             found=true
              echo "It's there!"
             break
-            elif [[ $found == true ]]; then
+            elif [[ "$found" == "true" ]]; then
             echo "ccc"
           else
           echo "something else"
