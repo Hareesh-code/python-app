@@ -15,7 +15,8 @@ on:
 jobs:
   vm-github-mapper:
     runs-on: ubuntu-latest
-
+    outputs:
+      vm_matrix: ${{ steps.get_vm_name.outputs.vm_name }}
     steps:
     - uses: actions/checkout@v4
     # Get the git username
@@ -29,6 +30,7 @@ jobs:
 
       # Get VM instance name
     - name: 'Get the VM instance name'
+      id: get_vm_name
       run: |
         profile_name=${{ steps.get_username.outputs.profile_name }}
         vm_instance="labvm-alephone labvm-alephzero labvm-banothh labvm-felixte labvm-hitzp labvm-ponnampal"
@@ -38,6 +40,7 @@ jobs:
           echo $profile_name
             found=false
             if [[ $substring == "banothh" ]]; then
+             echo "vm_name=$vm_instance" >> "$GITHUB_OUTPUT"
              found=true
              echo "It's there!"
             break
@@ -67,10 +70,18 @@ jobs:
         - run: |
             echo "${{ matrix.value }}"
   update_to_standed:
-        if: inputs.machine_type == 'standard-GPU'
-        runs-on: ubuntu-latest
+    needs: [ vm-github-mapper ]
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        value: ${{fromJSON(needs.vm-github-mapper.outputs.vm_matrix)}}
         steps:
-          - name: Update VM
-            run: |
-              profile_data=${{ steps.get_username.outputs.profile_name }}
-              echo "profile_data"
+          - run: |
+              echo "${{ matrix.value }}"
+            if: inputs.machine_type == 'standard-GPU'
+            runs-on: ubuntu-latest
+            steps:
+            - name: Update VM
+              run: |
+                profile_data=${{fromJSON(needs.vm-github-mapper.outputs.vm_matrix)}}
+                echo "profile_data"
