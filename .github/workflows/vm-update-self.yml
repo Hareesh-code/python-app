@@ -47,7 +47,7 @@ jobs:
           echo "something else"
            fi
         done
-      update_to_standed:
+  update_to_standed:
         if: inputs.machine_type == 'standard-GPU'
         runs-on: ubuntu-latest
         steps:
