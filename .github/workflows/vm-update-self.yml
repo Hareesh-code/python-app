@@ -43,3 +43,8 @@ jobs:
             break
            fi
         done <<< $substring
+          if [[ $found ==true ]]; then
+          echo "instance found."
+          else
+          echo " not found"
+          fi
