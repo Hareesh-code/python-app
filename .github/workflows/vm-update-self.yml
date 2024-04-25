@@ -47,6 +47,25 @@ jobs:
           echo "something else"
            fi
         done
+  setup:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.matrix.outputs.value }}
+    steps:
+      - id: matrix
+        run: |
+          echo "value=[\"a\", \"b\", \"c\"]" >> $GITHUB_OUTPUT
+      - run: |
+          echo "${{ steps.matrix.outputs.value }}"
+    build:
+      needs: [ setup ]
+      runs-on: ubuntu-latest
+      strategy:
+        matrix:
+          value: ${{fromJSON(needs.setup.outputs.matrix)}}
+      steps:
+        - run: |
+            echo "${{ matrix.value }}"
   update_to_standed:
         if: inputs.machine_type == 'standard-GPU'
         runs-on: ubuntu-latest
