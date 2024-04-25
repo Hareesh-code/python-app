@@ -36,9 +36,15 @@ jobs:
           substring=${user#*-}
           echo $substring
           echo $profile_name
+            found=false
             if [[ $substring == $profile_name ]]; then
              echo "It's there!"
-            else
-            echo " User not available"
+             found=true
+            break
            fi
         done
+        if [[ $found ==true ]]; then
+         echo " Instance : $substring found !"
+        else
+        echo " Instance :substring not found."
+        fi
