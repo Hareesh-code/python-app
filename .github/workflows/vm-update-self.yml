@@ -57,7 +57,7 @@ jobs:
           echo "value=[\"a\", \"b\", \"c\"]" >> $GITHUB_OUTPUT
       - run: |
           echo "${{ steps.matrix.outputs.value }}"
-    build:
+  build:
       needs: [ setup ]
       runs-on: ubuntu-latest
       strategy:
