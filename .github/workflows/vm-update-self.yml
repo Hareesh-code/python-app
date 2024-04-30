@@ -15,6 +15,8 @@ on:
 jobs:
   vm-github-mapper:
     runs-on: ubuntu-latest
+    outputs:
+      profile_name=${{ steps.get_username.outputs.profile_name }}
     steps:
     - uses: actions/checkout@v4
     # Get the git username
@@ -48,37 +50,13 @@ jobs:
           echo "something else"
            fi
         done
-  setup:
-    runs-on: ubuntu-latest
-    outputs:
-      matrix: ${{ steps.matrix.outputs.value }}
-        echo "${{ steps.matrix.outputs.value }}"
-    steps:
-      - id: matrix
-        run: |
-          echo "value=[\"a\", \"b\", \"c\"]" >> $GITHUB_OUTPUT
-      - run: |
-          echo "${{ steps.matrix.outputs.value }}"
-  build:
-      needs: [ setup ]
+    Update_to_standard_vm:
+      if: inputs.machine_type == 'standard-CPU'
+      needs: vm-github-mapper
       runs-on: ubuntu-latest
-      strategy:
-        matrix:
-          value: ${{fromJSON(needs.setup.outputs.matrix)}}
       steps:
-        - run: |
-            echo "${{ matrix.value }}"
-  update_to_standed:
-    needs: vm-github-mapper
-    runs-on: ubuntu-latest
-    steps:
-      - run: |
-          echo "profile_name=${{ needs.get_username.outputs.profile_name }}"
-              echo $profile_name
-            if: inputs.machine_type == 'standard-GPU'
-            runs-on: ubuntu-latest
-            steps:
-            - name: Update VM
-              run: |
-                profile_data=${{fromJSON(needs.vm-github-mapper.outputs.vm_matrix)}}
-                echo "profile_data"
+      - uses: actions/checkout@v4
+      # Get the git username
+      - name: 'Get the Github username'
+        run: |
+         echo  "Initial Value: ${{ needs.get_username.outputs.profile_name }}"
