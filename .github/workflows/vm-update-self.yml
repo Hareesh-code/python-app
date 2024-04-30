@@ -16,7 +16,7 @@ jobs:
   vm-github-mapper:
     runs-on: ubuntu-latest
     outputs:
-      vm_matrix: ${{ steps.get_vm_name.outputs.vm_name }}
+      profile_name=${{ steps.get_username.outputs.profile_name }}
     steps:
     - uses: actions/checkout@v4
     # Get the git username
@@ -71,16 +71,12 @@ jobs:
         - run: |
             echo "${{ matrix.value }}"
   update_to_standed:
-    needs: [ setup ]
+    needs: initialize
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        value: ${{fromJSON(needs.setup.outputs.matrix)}}
-        steps:
-          - run: |
-              echo "${{ matrix.value }}"
-               echo "vm_name=${{ matrix.value }}" >> "$GITHUB_OUTPUT"
-              echo $vm_name
+    steps:
+      - run: |
+          echo "profile_name=${{ needs.get_username.outputs.profile_name }}"
+              echo $profile_name
             if: inputs.machine_type == 'standard-GPU'
             runs-on: ubuntu-latest
             steps:
