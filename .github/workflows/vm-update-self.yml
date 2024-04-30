@@ -69,7 +69,7 @@ jobs:
         - run: |
             echo "${{ matrix.value }}"
   update_to_standed:
-    needs: initialize
+    needs: vm-github-mapper
     runs-on: ubuntu-latest
     steps:
       - run: |
