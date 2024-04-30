@@ -49,7 +49,7 @@ jobs:
           echo "something else"
            fi
         done
-    Update_to_standard_vm:
+  Update_to_standard_vm:
       if: inputs.machine_type == 'standard-CPU'
       needs: vm-github-mapper
       runs-on: ubuntu-latest
