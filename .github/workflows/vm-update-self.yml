@@ -15,7 +15,8 @@ on:
 jobs:
   vm-github-mapper:
     runs-on: ubuntu-latest
-
+    outputs:
+      profile_name: ${{ steps.get_username.outputs.profile_name }}
     steps:
     - uses: actions/checkout@v4
     # Get the git username
@@ -26,6 +27,7 @@ jobs:
         echo ${{ github.actor }}
         profile_name=${username%-code}
         echo "profile_name=$profile_name" >> "$GITHUB_OUTPUT"
+        echo "::set-output name=profile_name::$profile_name"
 
       # Get VM instance name
     - name: 'Get the VM instance name'
@@ -59,3 +61,4 @@ jobs:
       - name: 'Get the Github username'
         run: |
          echo  "Initial Value: ${{ needs.get_vm_name.outputs.vm_name }}"
+          echo "profile Value: ${{ needs.vm-github-mapper.outputs.profile_name }}"
