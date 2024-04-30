@@ -15,8 +15,7 @@ on:
 jobs:
   vm-github-mapper:
     runs-on: ubuntu-latest
-    outputs:
-      profile_name=${{ steps.get_username.outputs.profile_name }}
+
     steps:
     - uses: actions/checkout@v4
     # Get the git username
