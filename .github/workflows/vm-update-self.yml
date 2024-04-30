@@ -11,8 +11,7 @@ on:
           - default
           - standard-CPU
           - standard-GPU
-env:
-  DATA:
+
 jobs:
   vm-github-mapper:
     runs-on: ubuntu-latest
@@ -28,8 +27,7 @@ jobs:
         echo ${{ github.actor }}
         profile_name=${username%-code}
         echo "profile_name=$profile_name" >> "$GITHUB_OUTPUT"
-        env.DATA=${username%-code}
-        echo " data ${env.DATA}
+
       # Get VM instance name
     - name: 'Get the VM instance name'
       id: get_vm_name
@@ -72,3 +70,21 @@ jobs:
       steps:
         - run: |
             echo "${{ matrix.value }}"
+  update_to_standed:
+    needs: [ setup ]
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        value: ${{fromJSON(needs.setup.outputs.matrix)}}
+        steps:
+          - run: |
+              echo "${{ matrix.value }}"
+               echo "vm_name=${{ matrix.value }}" >> "$GITHUB_OUTPUT"
+              echo $vm_name
+            if: inputs.machine_type == 'standard-GPU'
+            runs-on: ubuntu-latest
+            steps:
+            - name: Update VM
+              run: |
+                profile_data=${{fromJSON(needs.vm-github-mapper.outputs.vm_matrix)}}
+                echo "profile_data"
