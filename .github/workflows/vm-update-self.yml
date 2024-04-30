@@ -58,4 +58,4 @@ jobs:
       # Get the git username
       - name: 'Get the Github username'
         run: |
-         echo  "Initial Value: ${{ needs.get_username.outputs.profile_name }}"
+         echo  "Initial Value: ${{ needs.profile_name.outputs.profile_name }}"
