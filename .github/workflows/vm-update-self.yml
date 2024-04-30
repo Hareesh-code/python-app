@@ -72,21 +72,3 @@ jobs:
       steps:
         - run: |
             echo "${{ matrix.value }}"
-  update_to_standed:
-    needs: [ setup ]
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        value: ${{fromJSON(needs.setup.outputs.matrix)}}
-        steps:
-          - run: |
-              echo "${{ matrix.value }}"
-               echo "vm_name=${{ matrix.value }}" >> "$GITHUB_OUTPUT"
-              echo $vm_name
-            if: inputs.machine_type == 'standard-GPU'
-            runs-on: ubuntu-latest
-            steps:
-            - name: Update VM
-              run: |
-                profile_data=${{fromJSON(needs.vm-github-mapper.outputs.vm_matrix)}}
-                echo "profile_data"
