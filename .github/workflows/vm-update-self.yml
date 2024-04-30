@@ -11,7 +11,8 @@ on:
           - default
           - standard-CPU
           - standard-GPU
-
+env:
+  DATA:
 jobs:
   vm-github-mapper:
     runs-on: ubuntu-latest
@@ -27,7 +28,8 @@ jobs:
         echo ${{ github.actor }}
         profile_name=${username%-code}
         echo "profile_name=$profile_name" >> "$GITHUB_OUTPUT"
-
+        env.DATA=${username%-code}
+        echo " data ${env.DATA}
       # Get VM instance name
     - name: 'Get the VM instance name'
       id: get_vm_name
