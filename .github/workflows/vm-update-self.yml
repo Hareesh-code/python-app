@@ -25,7 +25,7 @@ jobs:
       id: get_username
       run: |
         #!/bin/bash
-          username=${{ github.actor }} | tr '[:upper:]' '[:lower:]')
+          username=${{ github.actor }} | tr '[:upper:]' '[:lower:]'
         echo "Converted username: $username"
          profile_name=${username%-code}
         echo "profile_name=$profile_name" >> "$GITHUB_OUTPUT"
