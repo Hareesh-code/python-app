@@ -24,9 +24,10 @@ jobs:
     - name: 'Get the Github username'
       id: get_username
       run: |
-        username=${{github.actor }}
-        echo ${{ github.actor }}
-        profile_name=${username%-code}
+        #!/bin/bash
+          username=$(echo "${{ github.actor }}" | tr '[:upper:]' '[:lower:]')
+          echo "Converted username: $username"
+         profile_name=${username%-code}
         echo "profile_name=$profile_name" >> "$GITHUB_OUTPUT"
         echo "::set-output name=profile_name::$profile_name"
 
