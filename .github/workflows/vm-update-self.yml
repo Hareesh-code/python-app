@@ -25,8 +25,9 @@ jobs:
       id: get_username
       run: |
         #!/bin/bash
-          username=${{ github.actor.toLowerCase() }}
-        echo "Converted username: $username"
+          username=${{ github.actor }}
+        lowercase_username="${username,,}"
+        echo "Converted username: lowercase_username"
          profile_name=${username%-code}
         echo "profile_name=$profile_name" >> "$GITHUB_OUTPUT"
         echo "::set-output name=profile_name::$profile_name"
